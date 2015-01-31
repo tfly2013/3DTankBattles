@@ -1,0 +1,16 @@
+<XamlCompilerSaveState>
+  <ReferenceAssemblyList>
+    <LocalAssembly PathName="c:\users\kimple\desktop\newtankbattles\project2\obj\release\intermediatexaml\project2.exe" HashGuid="985f63a1-fae2-63cf-e47c-ef07656f050e" />
+    <ReferenceAssembly PathName="c:\users\kimple\desktop\newtankbattles\packages\sharpdx.2.6.2\bin\directx11_2-signed-winrt\sharpdx.d3dcompiler.dll" HashGuid="c0258fad-5f14-113d-fd9e-2d38c33804a3" />
+    <ReferenceAssembly PathName="c:\users\kimple\desktop\newtankbattles\packages\sharpdx.2.6.2\bin\directx11_2-signed-winrt\sharpdx.direct2d1.dll" HashGuid="619c1968-9d98-7c9e-c40b-70b59f03ff44" />
+    <ReferenceAssembly PathName="c:\users\kimple\desktop\newtankbattles\packages\sharpdx.2.6.2\bin\directx11_2-signed-winrt\sharpdx.direct3d11.dll" HashGuid="4c05a799-608d-c868-eb22-a8f88fe41ea6" />
+    <ReferenceAssembly PathName="c:\users\kimple\desktop\newtankbattles\packages\sharpdx.2.6.2\bin\directx11_2-signed-winrt\sharpdx.dll" HashGuid="e12b6747-5621-38e3-6aa9-47a988fc2072" />
+    <ReferenceAssembly PathName="c:\users\kimple\desktop\newtankbattles\packages\sharpdx.2.6.2\bin\directx11_2-signed-winrt\sharpdx.dxgi.dll" HashGuid="be2c2291-5ada-cf76-cff4-7ac0d0e6682d" />
+    <ReferenceAssembly PathName="c:\users\kimple\desktop\newtankbattles\packages\sharpdx.2.6.2\bin\directx11_2-signed-winrt\sharpdx.toolkit.audio.dll" HashGuid="cf2f4333-58a5-4bd7-956c-24b673735afb" />
+    <ReferenceAssembly PathName="c:\users\kimple\desktop\newtankbattles\packages\sharpdx.2.6.2\bin\directx11_2-signed-winrt\sharpdx.toolkit.dll" HashGuid="8ae3ffcd-ff5f-dc01-be6b-5857a5b97402" />
+    <ReferenceAssembly PathName="c:\users\kimple\desktop\newtankbattles\packages\sharpdx.2.6.2\bin\directx11_2-signed-winrt\sharpdx.toolkit.game.dll" HashGuid="795b482f-5dc7-992d-7122-96a3642d990e" />
+    <ReferenceAssembly PathName="c:\users\kimple\desktop\newtankbattles\packages\sharpdx.2.6.2\bin\directx11_2-signed-winrt\sharpdx.toolkit.graphics.dll" HashGuid="0a76d7e9-5679-8c16-29c9-604a808c345d" />
+    <ReferenceAssembly PathName="c:\users\kimple\desktop\newtankbattles\packages\sharpdx.2.6.2\bin\directx11_2-signed-winrt\sharpdx.toolkit.input.dll" HashGuid="175a9f4a-7214-7673-b94d-9c1e780361c2" />
+    <ReferenceAssembly PathName="c:\users\kimple\desktop\newtankbattles\packages\sharpdx.2.6.2\bin\directx11_2-signed-winrt\sharpdx.xaudio2.dll" HashGuid="2b85ea77-857b-7a56-644e-8483fa1ef26a" />
+  </ReferenceAssemblyList>
+</XamlCompilerSaveState>

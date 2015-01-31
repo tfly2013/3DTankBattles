@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>KIMPLE-PC</Machine>
+    <WindowsUser>Kimple</WindowsUser>
+    <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+    <SolutionConfiguration>Release|AnyCPU</SolutionConfiguration>
+    <PackageArchitecture>neutral</PackageArchitecture>
+    <PackageIdentityName>42716KimpleKe.3DTankBattles</PackageIdentityName>
+    <IntermediateOutputPath>C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\bin\Release\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\bin\Release\Project2.exe">
+      <PackagePath>Project2.exe</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\packages\SharpDX.2.6.2\build\..\Bin\DirectX11_2-Signed-winrt\SharpDX.D3DCompiler.dll">
+      <PackagePath>SharpDX.D3DCompiler.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\packages\SharpDX.2.6.2\build\..\Bin\DirectX11_2-Signed-winrt\SharpDX.Direct2D1.dll">
+      <PackagePath>SharpDX.Direct2D1.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\packages\SharpDX.2.6.2\build\..\Bin\DirectX11_2-Signed-winrt\SharpDX.Direct3D11.dll">
+      <PackagePath>SharpDX.Direct3D11.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\packages\SharpDX.2.6.2\build\..\Bin\DirectX11_2-Signed-winrt\SharpDX.dll">
+      <PackagePath>SharpDX.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\packages\SharpDX.2.6.2\build\..\Bin\DirectX11_2-Signed-winrt\SharpDX.DXGI.dll">
+      <PackagePath>SharpDX.DXGI.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\packages\SharpDX.2.6.2\build\..\Bin\DirectX11_2-Signed-winrt\SharpDX.Toolkit.Audio.dll">
+      <PackagePath>SharpDX.Toolkit.Audio.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\packages\SharpDX.2.6.2\build\..\Bin\DirectX11_2-Signed-winrt\SharpDX.Toolkit.dll">
+      <PackagePath>SharpDX.Toolkit.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\packages\SharpDX.2.6.2\build\..\Bin\DirectX11_2-Signed-winrt\SharpDX.Toolkit.Game.dll">
+      <PackagePath>SharpDX.Toolkit.Game.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\packages\SharpDX.2.6.2\build\..\Bin\DirectX11_2-Signed-winrt\SharpDX.Toolkit.Graphics.dll">
+      <PackagePath>SharpDX.Toolkit.Graphics.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\packages\SharpDX.2.6.2\build\..\Bin\DirectX11_2-Signed-winrt\SharpDX.Toolkit.Input.dll">
+      <PackagePath>SharpDX.Toolkit.Input.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\packages\SharpDX.2.6.2\build\..\Bin\DirectX11_2-Signed-winrt\SharpDX.XAudio2.dll">
+      <PackagePath>SharpDX.XAudio2.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\Assets\UI\control.png">
+      <PackagePath>Assets\UI\control.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\Assets\UI\dragger.png">
+      <PackagePath>Assets\UI\dragger.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\Assets\Logo.scale-100.png">
+      <PackagePath>Assets\Logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\Assets\SmallLogo.scale-100.png">
+      <PackagePath>Assets\SmallLogo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\Assets\SplashScreen.scale-100.png">
+      <PackagePath>Assets\SplashScreen.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\Assets\UI\mainMenuBackground.png">
+      <PackagePath>Assets\UI\mainMenuBackground.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\Assets\StoreLogo.scale-100.png">
+      <PackagePath>Assets\StoreLogo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\Assets\UI\crosshair.png">
+      <PackagePath>Assets\UI\crosshair.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\Assets\UI\radar.png">
+      <PackagePath>Assets\UI\radar.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\Assets\UI\scoreboard_background_d.png">
+      <PackagePath>Assets\UI\scoreboard_background_d.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\Assets\UI\scoreboard_background_v.png">
+      <PackagePath>Assets\UI\scoreboard_background_v.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\Assets\UI\menuBackground.jpg">
+      <PackagePath>Assets\UI\menuBackground.jpg</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\readMe.txt">
+      <PackagePath>readMe.txt</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\skybox\SkyboxEffect.tkb">
+      <PackagePath>Content\skybox\SkyboxEffect.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\particle\ParticleEffect.tkb">
+      <PackagePath>Content\particle\ParticleEffect.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\ObjectShader.tkb">
+      <PackagePath>Content\ObjectShader.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\tank\tiger\tiger.tkb">
+      <PackagePath>Content\tank\tiger\tiger.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\shell\shell.tkb">
+      <PackagePath>Content\shell\shell.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\tank\abrams\abrams.tkb">
+      <PackagePath>Content\tank\abrams\abrams.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\tank\abrams\tank_body_y.tkb">
+      <PackagePath>Content\tank\abrams\tank_body_y.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\tank\abrams\tank_body_g.tkb">
+      <PackagePath>Content\tank\abrams\tank_body_g.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\skybox\skybox.tkb">
+      <PackagePath>Content\skybox\skybox.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\particle\explosion.tkb">
+      <PackagePath>Content\particle\explosion.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\particle\smoke.tkb">
+      <PackagePath>Content\particle\smoke.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\shell\shell_body.tkb">
+      <PackagePath>Content\shell\shell_body.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\shell\shell_tip.tkb">
+      <PackagePath>Content\shell\shell_tip.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\terrain_texture.tkb">
+      <PackagePath>Content\terrain_texture.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\tank\tiger\tank_body.tkb">
+      <PackagePath>Content\tank\tiger\tank_body.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\tank\tiger\tank_track.tkb">
+      <PackagePath>Content\tank\tiger\tank_track.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\sound\background_music.tkb">
+      <PackagePath>Content\sound\background_music.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\sound\Defeat.tkb">
+      <PackagePath>Content\sound\Defeat.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\sound\Victory.tkb">
+      <PackagePath>Content\sound\Victory.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\sound\explosion.tkb">
+      <PackagePath>Content\sound\explosion.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\sound\fire.tkb">
+      <PackagePath>Content\sound\fire.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\obj\Release\Content\sound\hit.tkb">
+      <PackagePath>Content\sound\hit.tkb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\bin\Release\App.xbf">
+      <PackagePath>App.xbf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\bin\Release\Common\GameStyles.xbf">
+      <PackagePath>Common\GameStyles.xbf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\bin\Release\Common\StandardStyles.xbf">
+      <PackagePath>Common\StandardStyles.xbf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\bin\Release\Instructions.xbf">
+      <PackagePath>Instructions.xbf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\bin\Release\MainMenu.xbf">
+      <PackagePath>MainMenu.xbf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\bin\Release\MainPage.xbf">
+      <PackagePath>MainPage.xbf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\bin\Release\SettingsUI.xbf">
+      <PackagePath>SettingsUI.xbf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\bin\Release\Project2.xr.xml">
+      <PackagePath>Project2.xr.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Kimple\Desktop\NewTankBattles\Project2\bin\Release\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+</Project>
