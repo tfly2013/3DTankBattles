@@ -2,6 +2,7 @@
 // Last Modified: 20/10/2014
 // Shell file for shell object
 //Use SharpDX
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,6 @@ namespace Project2
             distance = 0;
             this.yaw = yaw - MathUtil.PiOverTwo;
             world = Matrix.Scaling(scale) * Matrix.RotationY(this.yaw) * Matrix.Translation(position);
-            //hitbox
             boundingSphere = TransformBoundingSphere(this, scale);
         }
 

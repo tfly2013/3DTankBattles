@@ -16,7 +16,6 @@ namespace Project2
 {
     public class ModelGameObject: GameObject
     {
-        
         public Model model;
         public Matrix world;
         public Vector3 position;
@@ -52,11 +51,6 @@ namespace Project2
 
         public override void Update(GameTime gameTime)
         {
-            //if (yaw > 2 * MathUtil.Pi)
-            //    yaw -= 2 * MathUtil.Pi;
-            //if (yaw < -2 * MathUtil.Pi)
-            //    yaw += 2 * MathUtil.Pi;
-
             //Glowing effect as you move around the field
             foreach (ModelMesh mesh in model.Meshes)
             {
@@ -78,7 +72,6 @@ namespace Project2
             {
                 foreach (ModelMeshPart part in mesh.MeshParts)
                 {
-
                     part.Effect = effect;
                     effect.Parameters["World"].SetValue(world);
                     effect.Parameters["Projection"].SetValue(camera.Projection);
@@ -86,10 +79,9 @@ namespace Project2
                     effect.Parameters["cameraPos"].SetValue(camera.Position);
                     effect.Parameters["worldInvTrp"].SetValue(worldInversedTransposed);
                     effect.Parameters["ModelTexture"].SetResource(texture);
-
-
                 }
                 //Draw mesh individually
+                //Matrix[] transforms = new Matrix[mesh.MeshParts.Count];
                 mesh.Draw(game.GraphicsDevice, effect);
             }
         }
@@ -101,7 +93,5 @@ namespace Project2
             float r = obj.model.CalculateBounds().Radius * scale * 0.55f;
             return new BoundingSphere(worldCenter, r);
         }
-
-
     }
 }

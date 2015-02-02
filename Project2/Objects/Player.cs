@@ -16,6 +16,10 @@ namespace Project2
 {
     public class Player : Tank
     {
+        public float shieldTime;
+
+        public List<Item> inventory;
+
         public bool Firing { get; set; }
 
         public Player(Project2Game game)
@@ -31,6 +35,9 @@ namespace Project2
             boundingSphere = TransformBoundingSphere(this, scale);
             CalculateSurroundings();
             camera.Update(position, yaw);
+            shieldTime = 0;
+            inventory = new List<Item>();
+            ResetInventory();
         }
 
         public override void Update(GameTime gameTime)
@@ -54,15 +61,15 @@ namespace Project2
                 rotate = -(float)game.accel_val.AccelerationX/50;
             }
 
-            float moveSpeed = 0.05f;
+            float moveSpeed = 0.02f;
             if (game.keyboardState.IsKeyDown(Keys.W))
                 move += moveSpeed;
             if (game.keyboardState.IsKeyDown(Keys.S))
                 move -= moveSpeed;
             if (game.keyboardState.IsKeyDown(Keys.A))
-                rotate = 0.02f;
+                rotate = 0.01f;
             if (game.keyboardState.IsKeyDown(Keys.D))
-                rotate = -0.02f;
+                rotate = -0.01f;
 
             if ((move > 0 && isBlockedOnFrontByAny()) || (move < 0 && isBlockedOnBackByAny()))
                 move = 0;
@@ -77,6 +84,41 @@ namespace Project2
 
             if (game.keyboardState.IsKeyDown(Keys.P) || Firing)
                 Fire();
+
+            if (game.keyboardState.IsKeyDown(Keys.U))
+            {
+                if (this.inventory[0] != null)
+                    InventoryOperate(inventory[0], 0);
+            }
+            else if (game.keyboardState.IsKeyDown(Keys.I))
+            {
+                if (this.inventory[1] != null)
+                    InventoryOperate(inventory[1], 1);
+            }
+            else if (game.keyboardState.IsKeyDown(Keys.O))
+            {
+                if (this.inventory[2] != null)
+                    InventoryOperate(inventory[2], 2);
+            }
+            else if (game.keyboardState.IsKeyDown(Keys.J))
+            {
+                if (this.inventory[3] != null)
+                    InventoryOperate(inventory[3], 3);
+            }
+            else if (game.keyboardState.IsKeyDown(Keys.K))
+            {
+                if (this.inventory[4] != null)
+                    InventoryOperate(inventory[4], 4);
+            }
+            else if (game.keyboardState.IsKeyDown(Keys.L))
+            {
+                if (this.inventory[5] != null)
+                    InventoryOperate(inventory[5], 5);
+            }
+
+            if (shieldTime > 0)
+                shieldTime -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
             base.Update(gameTime);
         }
 
@@ -141,6 +183,28 @@ namespace Project2
                 }
             }
             return false;
+        }
+
+        public void ResetInventory()
+        {
+            for (int i = 0; i < 6; i++)
+                inventory.Add(null);
+        }
+
+        public void InventoryOperate(Item item, int key)
+        {
+            if (item is Firstaid)
+            {
+                if (this.health <= 90)
+                    this.health += 12;
+                else
+                    this.health = 100;
+            }
+            else if (item is Shield)
+                this.shieldTime = 10000;
+
+            inventory.RemoveAt(key);
+            inventory.Insert(key, null);
         }
     }
 }

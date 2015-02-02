@@ -16,9 +16,9 @@
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>Project2_StoreKey.pfx</PackageCertificateKeyFile>
     <NuGetPackageImportStamp>c96af1a0</NuGetPackageImportStamp>
-    <AppxBundle>Auto</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
     <PackageCertificateThumbprint>87DC4106030F3C7C0B20D5C8B306E226C17789FF</PackageCertificateThumbprint>
-    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxPackageDir>C:\Users\Kimple\Desktop\Tank Battles\app packages\</AppxPackageDir>
     <AppxBundlePlatforms>neutral</AppxBundlePlatforms>
   </PropertyGroup>
@@ -113,6 +113,8 @@
     </Compile>
     <Compile Include="Camera.cs" />
     <Compile Include="Objects\Enemy.cs" />
+    <Compile Include="Objects\Firstaid.cs" />
+    <Compile Include="Objects\Item.cs" />
     <Compile Include="Objects\ModelGameObject.cs" />
     <Compile Include="Objects\GameObject.cs" />
     <Compile Include="HeightMap.cs" />
@@ -126,6 +128,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Objects\Shield.cs" />
     <Compile Include="Particle\ParticleSystem.cs" />
     <Compile Include="Particle\ParticleVertex.cs" />
     <Compile Include="Objects\Player.cs" />
@@ -145,6 +148,8 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <ToolkitModel Include="Content\items\first-aid\first_aid_kit.FBX" />
+    <ToolkitModel Include="Content\items\shield\shield.fbx" />
     <None Include="Project2_StoreKey.pfx" />
     <None Include="Project2_TemporaryKey.pfx" />
     <ToolkitModel Include="Content\tank\tiger\tiger.fbx">
@@ -154,14 +159,23 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </ToolkitModel>
     <ToolkitModel Include="Content\tank\abrams\abrams.fbx" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Square310x310Logo.scale-100.png" />
+    <Content Include="Assets\Square70x70Logo.scale-100.png" />
+    <Content Include="Assets\StoreLogo.scale-140.png" />
+    <Content Include="Assets\UI\characterFrame.png" />
+    <Content Include="Assets\UI\characterPic.png" />
     <Content Include="Assets\UI\control.png" />
     <Content Include="Assets\UI\dragger.png" />
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\UI\firstaid.png" />
+    <Content Include="Assets\UI\instructionBackground.png" />
     <Content Include="Assets\UI\mainMenuBackground.png" />
     <Content Include="Assets\UI\menuBackground.jpg" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
@@ -173,6 +187,11 @@
     <ToolkitAudio Include="Content\sound\Defeat.wav" />
     <ToolkitAudio Include="Content\sound\Victory.wav" />
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Assets\UI\shield.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-100.png" />
+    <ToolkitTexture Include="Content\items\first-aid\firstaid_color.png" />
+    <ToolkitTexture Include="Content\items\shield\Map.jpg" />
+    <ToolkitAudio Include="Content\sound\pickUpItem.wav" />
     <Content Include="readMe.txt" />
     <ToolkitAudio Include="Content\sound\explosion.wav" />
     <ToolkitAudio Include="Content\sound\fire.wav" />
@@ -238,7 +257,6 @@
   <ItemGroup>
     <Reference Include="SharpDX">
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="SharpDX.D3DCompiler">
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.D3DCompiler.dll</HintPath>

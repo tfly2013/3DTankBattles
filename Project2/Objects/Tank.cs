@@ -59,10 +59,11 @@ namespace Project2
             Vector3 rotatedMove = Vector3.TransformCoordinate(move, Matrix.RotationY(yaw));
             Vector3 newPosition = position + rotatedMove;
             float edgeOffset = GetRadians();
-            if (newPosition.X < heightMap.scale / 2 - edgeOffset &&
-                newPosition.Z < heightMap.scale / 2 - edgeOffset &&
-                newPosition.X > edgeOffset - heightMap.scale / 2 &&
-                newPosition.Z > edgeOffset - heightMap.scale / 2)
+            float restrictedArea = 4.0f;
+            if (newPosition.X < heightMap.scale / 2 - edgeOffset - restrictedArea&&
+                newPosition.Z < heightMap.scale / 2 - edgeOffset - restrictedArea&&
+                newPosition.X > edgeOffset - heightMap.scale / 2 + restrictedArea&&
+                newPosition.Z > edgeOffset - heightMap.scale / 2 + restrictedArea)
             {
                 position = newPosition;
                 position.Y = heightMap.GetHeight(position.X, position.Z) + HEIGHTOFFSET;
@@ -99,27 +100,31 @@ namespace Project2
                 //If collision, create particle for explosion and update them
                 if (this.isHit(game.shells[i]))
                 {
-                    for (int j = 0; j < 200; j++)
+                    if (!(this is Player && game.player.shieldTime > 0))
                     {
-                        Vector3 explosionPos = game.shells[i].position;
-                        Vector3 velocity = Vector3.Zero;
-                        float horizontalVelocity = MathUtil.Lerp(0.03f, 0.010f, (float)random.NextDouble());
-                        double horizontalAngle = random.NextDouble() * MathUtil.TwoPi;
-                        velocity.X += horizontalVelocity * (float)Math.Cos(horizontalAngle);
-                        velocity.Z += horizontalVelocity * (float)Math.Sin(horizontalAngle);
-                        velocity.Y += MathUtil.Lerp(-0.03f, 0.03f, (float)random.NextDouble());
-                        game.particleSystem.Spawn(explosionPos, velocity, 0.02f, 0.05f, 0.5f, false, true);
+                        for (int j = 0; j < 200; j++)
+                        {
+                            Vector3 explosionPos = game.shells[i].position;
+                            Vector3 velocity = Vector3.Zero;
+                            float horizontalVelocity = MathUtil.Lerp(0.03f, 0.010f, (float)random.NextDouble());
+                            double horizontalAngle = random.NextDouble() * MathUtil.TwoPi;
+                            velocity.X += horizontalVelocity * (float)Math.Cos(horizontalAngle);
+                            velocity.Z += horizontalVelocity * (float)Math.Sin(horizontalAngle);
+                            velocity.Y += MathUtil.Lerp(-0.03f, 0.03f, (float)random.NextDouble());
+                            game.particleSystem.Spawn(explosionPos, velocity, 0.02f, 0.05f, 0.5f, false, true);
+                        }
+                        //Create hit sound (spatial sound)
+                        SoundEffectInstance hitSoundInstance = game.hitSound.Create();
+                        hitSoundInstance.Apply3D(game.player.SoundMatrix, Vector3.Zero,
+                            game.shells[i].SoundMatrix, Vector3.Zero);
+                        hitSoundInstance.Play();
+
+                        //remove health
+                        this.health--;
                     }
-                    //Create hit sound (spatial sound)
-                    SoundEffectInstance hitSoundInstance = game.hitSound.Create();
-                    hitSoundInstance.Apply3D(game.player.SoundMatrix, Vector3.Zero,
-                        game.shells[i].SoundMatrix, Vector3.Zero);
-                    hitSoundInstance.Play();
                     //remove shell from the game
                     game.shells.RemoveAt(i);
                     i--;
-                    //remove health
-                    this.health--;
                 }
             }
             base.Update(gameTime);

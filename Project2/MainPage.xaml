@@ -45,29 +45,61 @@
             <Button x:Name="v_continue" Content="Continue" HorizontalAlignment="Center" VerticalAlignment="Center" Click="VContinueClicked" Width="180" Height="50" Margin="9,10,710,200" Style="{StaticResource MenuButtonStyle}"/>
         </StackPanel>
     </Border>
-    <Grid Margin="0,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="6*" />
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
-        <Button x:Name="btnMenu" Content="Menu" HorizontalAlignment="Right" VerticalAlignment="Stretch" Click="btnMenuClicked" Style="{StaticResource MenuButtonStyle}" Width="100" Grid.Column="2" Margin="0,0,20,0" />
-        <ProgressBar x:Name="lifeBar" HorizontalAlignment="Stretch" Height="50" Margin="0" VerticalAlignment="Top" Background="#7F9B9999" Foreground="#FFFF0404" BorderBrush="Black" Style="{StaticResource LifeBarStyle}" Grid.Column="1" SmallChange="1"/>
-        <TextBlock x:Name="txtScore" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="25" VerticalAlignment="Center" Margin="0, 0, 0, 0" FontStyle="Italic" FontWeight="Bold" IsColorFontEnabled="True"/>
-    </Grid>
-    <Canvas x:Name="control" Margin="50,0,0,50" Width="300" Height="300" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+    <Canvas x:Name="control" Margin="50,0,0,50" Width="200" Height="200" HorizontalAlignment="Left" VerticalAlignment="Bottom">
         <Canvas.Background>
             <ImageBrush Stretch="Fill" ImageSource="Assets/UI/control.png"/>
         </Canvas.Background>
-        <Image x:Name="dragger" HorizontalAlignment="Center" Height="100" VerticalAlignment="Center" Width="100" Canvas.Left="100" Canvas.Top="100" Source="Assets/UI/dragger.png"/>
+        <Image x:Name="dragger" HorizontalAlignment="Center" Height="80" VerticalAlignment="Center" Width="80" Canvas.Left="60" Canvas.Top="60" Source="Assets/UI/dragger.png"/>
     </Canvas>
-    <Canvas x:Name="radar" HorizontalAlignment="Right" Height="300" Margin="0,0,50,50" VerticalAlignment="Bottom" Width="300">
+    <Canvas x:Name="character" HorizontalAlignment="Left" Height="250" Width="444" Margin="20,20,0,0" VerticalAlignment="Top">
+        <Canvas.Background>
+            <ImageBrush Stretch="UniformToFill" ImageSource="Assets/UI/characterFrame.png"/>
+        </Canvas.Background>
+        <Image x:Name="characterPic" HorizontalAlignment="Center" Height="191" VerticalAlignment="Center" Width="160" Canvas.Left="19" Canvas.Top="28" Source="Assets/UI/characterPic.png"/>
+        <ProgressBar x:Name="lifeBar" HorizontalAlignment="Stretch" Height="23" VerticalAlignment="Top" Background="#7F9B9999" Foreground="#FFFF0404" Style="{StaticResource LifeBarStyle}" SmallChange="1" Canvas.Left="207" Canvas.Top="178" Width="211"/>
+        <Canvas x:Name="inventory" HorizontalAlignment="Left" VerticalAlignment="Top" Height="106" Width="164" Canvas.Left="254" Canvas.Top="46" Visibility="Visible"/>
+    </Canvas>
+
+    <Button x:Name="btnMenu" Content="Menu" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnMenuClicked" Style="{StaticResource MenuButtonStyle}" Width="90" Height="45" Margin="20,290,0,0" />
+    <TextBlock x:Name="txtScore" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="25" VerticalAlignment="Top" Margin="0, 20, 0, 0" FontStyle="Italic" FontWeight="Bold" IsColorFontEnabled="True"/>
+    <Canvas x:Name="radar" HorizontalAlignment="Right" Height="300" Width="300" Margin="0,20,20,0" VerticalAlignment="Top">
         <Canvas.Background>
             <ImageBrush Stretch="UniformToFill" ImageSource="Assets/UI/radar.png"/>
         </Canvas.Background>
     </Canvas>
-    <ScrollViewer x:Name="scrDebug" HorizontalAlignment="Center" Margin="0,100,900,0" VerticalAlignment="Top" Width="350" Height="300" HorizontalScrollMode="Disabled">
-        <TextBlock x:Name="txtDebug" TextWrapping="Wrap" FontSize="14"/>
-    </ScrollViewer>
-    <TextBlock x:Name="level" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="25" VerticalAlignment="Center" Margin="0, 0, 0, 550" FontStyle="Italic" FontWeight="Bold" IsColorFontEnabled="True" Visibility="Collapsed"/>
+    <Grid x:Name="LayoutRoot" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Margin="0,-100,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="Input" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+        </Grid>
+        <Grid x:Name="Output" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1">
+            <Grid.Resources>
+                <Storyboard x:Name="LevelBoard">
+                    <DoubleAnimation
+                            Storyboard.TargetName="LevelRectangle"
+                            Storyboard.TargetProperty="(Canvas.Top)"
+                            Duration="0:0:1"
+                            To="200"
+                            AutoReverse="True"/>
+                </Storyboard>
+            </Grid.Resources>
+            <Canvas Width="300" Height="300">
+                <Grid Name="LevelRectangle" Width="300" Height="100">
+                    <TextBlock x:Name="level" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="25" VerticalAlignment="Center" Margin="0" FontStyle="Italic" FontWeight="Bold"/>
+                </Grid>
+            </Canvas>
+        </Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="DefaultLayout"/>
+                <VisualState x:Name="Below768Layout"/>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
 </SwapChainBackgroundPanel>
+

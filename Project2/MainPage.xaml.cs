@@ -28,6 +28,9 @@ using Windows.UI.Input;
 using System;
 using System.Windows;
 using System.Linq;
+using SharpDX.Toolkit;
+using Windows.UI.Xaml.Media.Imaging;
+using System.Collections.Generic;
 
 namespace Project2
 {
@@ -45,6 +48,8 @@ namespace Project2
         private uint draggerPointerId;
         private uint firePointerId;
 
+        //private Dictionary<int, Image> inventoryList;
+
         public MainPage()
         {
             InitializeComponent();
@@ -54,12 +59,21 @@ namespace Project2
             this.Children.Add(mainMenu);
             HideGameUI();
             HideScoreboard();
+            //inventoryList = new Dictionary<int, Image>();
+            //for (int i = 0; i < 6; i++)
+            //    inventoryList.Add(i, null);
         }
 
-        public void UpdateLevel() 
+        public void UpdateLevel()
         {
             int dif = game.difficulty + 1;
             level.Text = "Level " + dif.ToString();
+        }
+
+        public void DisplayLevelBoard()
+        {
+            UpdateLevel();
+            LevelBoard.Begin();
         }
 
         public void UpdateScore(int score)
@@ -72,12 +86,62 @@ namespace Project2
             lifeBar.Value = health;
         }
 
+        public void UpdateInventory()
+        {
+            ResetInventory();
+            int num = 0;
+            foreach (Item item in game.player.inventory)
+            {
+                Tuple<double, double>pos = InventoryCat(num);
+                double left = pos.Item1;
+                double top = pos.Item2;
+                if (item is Firstaid || item is Shield)
+                    DrawInventory(left, top, item);
+                num++;
+            }
+        }
+
+        public void ResetInventory()
+        {
+            inventory.Children.Clear();
+        }
+
+        private Tuple<double, double> InventoryCat(int key)
+        {
+            if (key == 0)
+                return new Tuple<double, double>(0, 0);
+            else if (key == 1)
+                return new Tuple<double, double>(63.5, 0);
+            else if (key == 2)
+                return new Tuple<double, double>(125, 0);
+            else if (key == 3)
+                return new Tuple<double, double>(0, 61.5);
+            else if (key == 4)
+                return new Tuple<double, double>(63.5, 61.5);
+            else
+                return new Tuple<double, double>(125, 61.5);
+        }
+
+        private void DrawInventory(double left, double top, Item item)
+        {
+            Image img = new Image { Width = 35, Height = 45 };
+            if (item is Firstaid)
+                img.Source = new BitmapImage(new Uri("ms-appx:///Assets/UI/firstaid.png", UriKind.Absolute));
+            else if (item is Shield)
+                img.Source = new BitmapImage(new Uri("ms-appx:///Assets/UI/shield.png", UriKind.Absolute));
+
+            Canvas.SetLeft(img, left);
+            Canvas.SetTop(img, top);
+            inventory.Children.Add(img);
+            //inventoryList[key] = img;
+        }
+
         public void UpdateRadar()
         {
             radar.Children.Clear();
             //update radar
             foreach (Enemy enemy in game.enemies)
-            {                
+            {
                 if (game.player.GetDistance(enemy) <= 15)
                 {
                     double angleInBetween = game.player.GetAngleInBetween(enemy);
@@ -111,11 +175,11 @@ namespace Project2
 
         public void StartGame()
         {
-            game.Reset();
             this.Children.Remove(mainMenu);
             if (game.paused) game.paused = false;
             game.started = true;
             ShowGameUI();
+            game.Reset();
         }
 
         private void ResumeClicked(object sender, RoutedEventArgs e)
@@ -132,11 +196,10 @@ namespace Project2
         private void RestartClicked(object sender, RoutedEventArgs e)
         {
             HideMenu();
-            game.Reset();
             if (game.paused) game.paused = false;
             game.started = true;
             ShowGameUI();
-
+            game.Reset();
         }
 
         public void Victory()
@@ -145,18 +208,38 @@ namespace Project2
             HideGameUI();
             game.paused = true;
 
-            int score = game.score + game.player.health + (int)game.gameTime.TotalGameTime.TotalSeconds/3;
             v_health.Text = "Player Health:    " + game.player.health.ToString();
             int enemiesCount = 0;
             if (Settings.difficulty == 0)
-                enemiesCount += 10 - game.enemies.Count;
+                enemiesCount += 4 - game.enemies.Count;
             else if (Settings.difficulty == 1)
+                enemiesCount += 8 - game.enemies.Count;
+            else if (Settings.difficulty == 2)
+                enemiesCount += 12 - game.enemies.Count;
+            else if (Settings.difficulty == 3)
+                enemiesCount += 16 - game.enemies.Count;
+            else if (Settings.difficulty == 4)
                 enemiesCount += 20 - game.enemies.Count;
+            else if (Settings.difficulty == 5)
+                enemiesCount += 24 - game.enemies.Count;
+            else if (Settings.difficulty == 6)
+                enemiesCount += 28 - game.enemies.Count;
+            else if (Settings.difficulty == 7)
+                enemiesCount += 32 - game.enemies.Count;
+            else if (Settings.difficulty == 8)
+                enemiesCount += 36 - game.enemies.Count;
             else
-                enemiesCount += 30 - game.enemies.Count;
+                enemiesCount += 40 - game.enemies.Count;
             v_kills.Text = "Enemies Killed:  " + enemiesCount.ToString();
+
             v_time.Text = "Game Time:       " +
-                Math.Round((float)game.gameTime.TotalGameTime.TotalSeconds, 1, MidpointRounding.AwayFromZero) + "s";
+                Math.Round((float)game.gameTime.ElapsedGameTime.TotalMilliseconds, 1,
+                MidpointRounding.AwayFromZero) + "s";
+
+            int score = game.score + game.player.health -
+                    (int)game.gameTime.ElapsedGameTime.TotalMilliseconds / 5;
+            if (score < 0)
+                score = 0;
             v_gamescore.Text = "Game Score:      " + score;
 
             v_scoreboard.Visibility = Visibility.Visible;
@@ -166,51 +249,73 @@ namespace Project2
         private void VContinueClicked(object sender, RoutedEventArgs e)
         {
             HideScoreboard();
-            game.Reset();
-            if (game.difficulty < 2)
+            if (game.difficulty < 9)
             {
                 Settings.difficulty++;
                 game.started = true;
                 game.paused = false;
                 ShowGameUI();
             }
-            else 
+            else
             {
                 game.started = false;
                 mainMenu = new MainMenu(this);
                 this.Children.Add(mainMenu);
             }
+            game.Reset();
         }
 
-        public void Defeat() 
+        public void Defeat()
         {
             HideMenu();
             HideGameUI();
             game.paused = true;
-            int score = game.score + game.player.health + (int)game.gameTime.TotalGameTime.TotalSeconds/3;
+
             if (game.player.health <= 0)
                 game.player.health = 0;
             d_health.Text = "Player Health:    " + game.player.health.ToString();
             int enemiesCount = 0;
             if (Settings.difficulty == 0)
-                enemiesCount += 10 - game.enemies.Count;
+                enemiesCount += 4 - game.enemies.Count;
             else if (Settings.difficulty == 1)
-                enemiesCount += 18 - game.enemies.Count;
+                enemiesCount += 8 - game.enemies.Count;
+            else if (Settings.difficulty == 2)
+                enemiesCount += 12 - game.enemies.Count;
+            else if (Settings.difficulty == 3)
+                enemiesCount += 16 - game.enemies.Count;
+            else if (Settings.difficulty == 4)
+                enemiesCount += 20 - game.enemies.Count;
+            else if (Settings.difficulty == 5)
+                enemiesCount += 24 - game.enemies.Count;
+            else if (Settings.difficulty == 6)
+                enemiesCount += 28 - game.enemies.Count;
+            else if (Settings.difficulty == 7)
+                enemiesCount += 32 - game.enemies.Count;
+            else if (Settings.difficulty == 8)
+                enemiesCount += 36 - game.enemies.Count;
             else
-                enemiesCount += 25 - game.enemies.Count;
+                enemiesCount += 40 - game.enemies.Count;
             d_kills.Text = "Enemies Killed:  " + enemiesCount.ToString();
-            d_time.Text = "Game Time:       " + 
-                Math.Round((float)game.gameTime.TotalGameTime.TotalSeconds, 1, MidpointRounding.AwayFromZero) + "s";
+            d_time.Text = "Game Time:       " +
+                Math.Round((float)game.gameTime.ElapsedGameTime.TotalMilliseconds, 1,
+                MidpointRounding.AwayFromZero) + "s";
+
+            int score = game.score + game.player.health -
+                    (int)game.gameTime.ElapsedGameTime.TotalMilliseconds / 5;
+            if (score < 0)
+                score = 0;
             d_gamescore.Text = "Game Score:      " + score;
+
             d_scoreboard.Visibility = Visibility.Visible;
             v_scoreboard.Visibility = Visibility.Collapsed;
         }
 
         private void DContinueClicked(object sender, RoutedEventArgs e)
         {
-            game.Reset();
             HideScoreboard();
+            Settings.difficulty = 0;
             game.started = false;
+
             mainMenu = new MainMenu(this);
             this.Children.Add(mainMenu);
         }
@@ -220,7 +325,6 @@ namespace Project2
             HideMenu();
             HideGameUI();
             HideScoreboard();
-            game.Reset();
             game.started = false;
             mainMenu = new MainMenu(this);
             this.Children.Add(mainMenu);
@@ -242,7 +346,7 @@ namespace Project2
             else
                 control.Visibility = Visibility.Collapsed;
             radar.Visibility = Visibility.Visible;
-            level.Visibility = Visibility.Visible;
+            character.Visibility = Visibility.Visible;
         }
 
         public void HideGameUI()
@@ -252,7 +356,7 @@ namespace Project2
             lifeBar.Visibility = Visibility.Collapsed;
             control.Visibility = Visibility.Collapsed;
             radar.Visibility = Visibility.Collapsed;
-            level.Visibility = Visibility.Collapsed;
+            character.Visibility = Visibility.Collapsed;
         }
 
         private void btnMenuClicked(object sender, RoutedEventArgs e)
@@ -278,7 +382,8 @@ namespace Project2
         {
             return Windows.Devices.Input
                       .PointerDevice.GetPointerDevices()
-                      .Any(p => p.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Touch);
+                      .Any(p => p.PointerDeviceType ==
+                          Windows.Devices.Input.PointerDeviceType.Touch);
         }
 
         #region Control
@@ -376,14 +481,5 @@ namespace Project2
         }
         #endregion
 
-        public void DebugClear() 
-        {
-            txtDebug.Text = "";    
-        }
-
-        public void Debug(string s) 
-        {
-            txtDebug.Text += s;
-        }
     }
 }

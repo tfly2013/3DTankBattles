@@ -23,11 +23,18 @@
             <TextBlock Text="Difficulty" Style="{StaticResource TitleTextBlockStyle}"/>
             <TextBlock Margin="0,5,0,10" Text="Choose a difficulty level." Style="{StaticResource BodyTextBlockStyle}"/>
             <ComboBox x:Name="difficulty" Margin="0,5,0,0" SelectedIndex="0" HorizontalAlignment="Left" SelectionChanged="difficulty_SelectionChanged">
-                <ComboBoxItem Content="Easy"/>
-                <ComboBoxItem Content="Medium"/>
-                <ComboBoxItem Content="Hard"/>
+                <ComboBoxItem Content="Level 1"/>
+                <ComboBoxItem Content="Level 2"/>
+                <ComboBoxItem Content="Level 3"/>
+                <ComboBoxItem Content="Level 4"/>
+                <ComboBoxItem Content="Level 5"/>
+                <ComboBoxItem Content="Level 6"/>
+                <ComboBoxItem Content="Level 7"/>
+                <ComboBoxItem Content="Level 8"/>
+                <ComboBoxItem Content="Level 9"/>
+                <ComboBoxItem Content="Level 10"/>
             </ComboBox>
         </StackPanel>
-        
+
     </StackPanel>
 </SettingsFlyout>

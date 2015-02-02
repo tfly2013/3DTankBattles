@@ -17,13 +17,19 @@ namespace Project2
     //Enemy class for enemy tank AI
     public class Enemy : Tank
     {
-        public string name;
         public float timer;
+
+        /// <summary>
+        /// Initialize an Enemy object
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="x"></param>
+        /// <param name="z"></param>
+        /// <param name="name"></param>
+        /// <param name="color"></param>
         public Enemy(Project2Game game, float x, float z, string name, int color)
             : base(game, x, z)
         {
-            //each enemy has a name (used for recognition on player's radar)
-            this.name = name;
             timer = 0;
             //Load model and texture
             model = game.Content.Load<Model>("tank/abrams/abrams");
@@ -41,7 +47,7 @@ namespace Project2
             float time = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             timer += time;
             //reasonable movement speed for all enemies, roughly (float)5 per 10 seconds
-            float moveSpeed = 0.015f;
+            float moveSpeed = 0.01f;
             float amount = 0;
 
             float distx = this.position.X - game.player.position.X;
@@ -49,7 +55,7 @@ namespace Project2
             float totalDist = (float)Math.Sqrt(distx * distx + distz * distz);
 
             //tracking player, target player
-            float rotationSpeed = 0.02f;
+            float rotationSpeed = 0.01f;
             float rotate = 0;
             float theta = GetAngleInBetween(game.player);
 

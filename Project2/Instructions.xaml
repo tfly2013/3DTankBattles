@@ -6,12 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="800" Width="1364.985">
+    d:DesignWidth="1280"
+    d:DesignHeight="800">
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="Assets/UI/mainMenuBackground.png" Stretch="Uniform"/>
+            <ImageBrush ImageSource="Assets/UI/instructionBackground.png" Stretch="Uniform"/>
         </Grid.Background>
-        <Button x:Name="cmdBack" Content="Back" HorizontalAlignment="Right" Height="70" Margin="909,0,130,58" VerticalAlignment="Bottom" Width="200" Click="GoBack" Style="{StaticResource MenuButtonStyle}"/>
-        <TextBlock x:Name="txtInstructions" Foreground="Red" FontSize="20"  HorizontalAlignment="Left" Height="519" Margin="120,73,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="803" FontWeight="Bold"/>
+        <Button x:Name="cmdBack" Content="Back" HorizontalAlignment="Right" Height="70" Margin="909,0,121,58" VerticalAlignment="Bottom" Width="250" Click="GoBack" Style="{StaticResource MenuButtonStyle}"/>
+        <TextBlock x:Name="txtInstructions" Foreground="Black" FontSize="20"  HorizontalAlignment="Left" Height="519" Margin="80,73,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="803"/>
     </Grid>
 </Page>

@@ -36,6 +36,7 @@ using SharpDX.Toolkit.Graphics;
 using Windows.UI.Core;
 using Windows.Devices.Sensors;
 using SharpDX.Toolkit.Audio;
+
 namespace Project2
 {
 
@@ -55,10 +56,14 @@ namespace Project2
         public Player player;
         public List<Enemy> enemies;
         public List<Shell> shells;
+        public List<Item> items;
         private Skybox skybox;
         public ParticleSystem particleSystem;
         //Number of enemys per game
-        public int MAX_ENEMIES = 10;
+        public int MAX_ENEMIES = 4;
+        //index for chance to get shield and first-aid
+        public int shield_index = 4;
+        public int firstaid_index = 2;
         //difficulty level for the game
         public int difficulty;
         //Random used to randomly place enemies on the plane
@@ -72,6 +77,7 @@ namespace Project2
         public int score;
         //Audio files
         public SoundEffect explosionSound;
+        public SoundEffect pickUpItemSound;
         public SoundEffect fireSound;
         public SoundEffect hitSound;
         public SoundEffect backgroundMusic;
@@ -99,11 +105,11 @@ namespace Project2
 
             // Create the keyboard manager
             keyboardManager = new KeyboardManager(this);
-            
+
             // Create audio manager, audio volume needs to be dependent on distance between source and listener
             audioManager = new AudioManager(this);
             audioManager.EnableMasterVolumeLimiter();
-            audioManager.EnableSpatialAudio();            
+            audioManager.EnableSpatialAudio();
 
             this.Page = page;
             random = new Random();
@@ -112,7 +118,7 @@ namespace Project2
         protected override void LoadContent()
         {
             //Generate terrain of size 512 by 512
-            HeightMap = new HeightMap(513, 1.0f, 50.0f);
+            HeightMap = new HeightMap(513, 1.0f, 60.0f);
             Random r = new Random();
             Camera = new Camera(this);
             landscape = new Landscape(this);
@@ -121,6 +127,7 @@ namespace Project2
             player = new Player(this);
             shells = new List<Shell>();
             enemies = new List<Enemy>();
+            items = new List<Item>();
 
             //initialized score
             score = 0;
@@ -128,9 +135,10 @@ namespace Project2
             accel = Accelerometer.GetDefault();
             //Set particle system
             particleSystem = new ParticleSystem(this);
-            
+
             //Load sounds
             explosionSound = Content.Load<SoundEffect>("sound/explosion");
+            pickUpItemSound = Content.Load<SoundEffect>("sound/pickUpItem");
             fireSound = Content.Load<SoundEffect>("sound/fire");
             hitSound = Content.Load<SoundEffect>("sound/hit");
             victorySound = Content.Load<SoundEffect>("sound/Victory");
@@ -172,11 +180,25 @@ namespace Project2
                 {
                     difficulty = Settings.difficulty;
                     if (Settings.difficulty == 0)
-                        MAX_ENEMIES = 10;
+                        MAX_ENEMIES = 4;
                     else if (Settings.difficulty == 1)
-                        MAX_ENEMIES = 18;
+                        MAX_ENEMIES = 8;
+                    else if (Settings.difficulty == 2)
+                        MAX_ENEMIES = 12;
+                    else if (Settings.difficulty == 3)
+                        MAX_ENEMIES = 16;
+                    else if (Settings.difficulty == 4)
+                        MAX_ENEMIES = 20;
+                    else if (Settings.difficulty == 5)
+                        MAX_ENEMIES = 24;
+                    else if (Settings.difficulty == 6)
+                        MAX_ENEMIES = 28;
+                    else if (Settings.difficulty == 7)
+                        MAX_ENEMIES = 32;
+                    else if (Settings.difficulty == 8)
+                        MAX_ENEMIES = 36;
                     else
-                        MAX_ENEMIES = 25;
+                        MAX_ENEMIES = 40;
                     Reset();
                 }
 
@@ -187,7 +209,7 @@ namespace Project2
                 //Update shells fired, remove if out of range
                 for (int i = 0; i < shells.Count; i++)
                 {
-                    if (shells[i].OutOfScale() || shells[i].distance > 15)
+                    if (shells[i].OutOfScale() || shells[i].distance > 10)
                     {
                         shells.RemoveAt(i);
                         i--;
@@ -199,8 +221,17 @@ namespace Project2
                 //Update enemies on field, remove if health = 0
                 for (int i = 0; i < enemies.Count; i++)
                 {
-                    if (enemies[i].health == 0)
+                    if (enemies[i].health <= 0)
                     {
+                        //add item
+                        int ran = random.Next(0, 10);
+                        if (ran <= firstaid_index)
+                            items.Add(new Firstaid(this, enemies[i].position.X,
+                                enemies[i].position.Z, enemies[i].yaw));
+                        else if (ran <= shield_index && ran > firstaid_index)
+                            items.Add(new Shield(this, enemies[i].position.X,
+                                enemies[i].position.Z, enemies[i].yaw));
+
                         // Explosion particle
                         for (int j = 0; j < 200; j++)
                         {
@@ -216,8 +247,8 @@ namespace Project2
 
                         // Explosion Sound
                         SoundEffectInstance explosionSoundInstance = explosionSound.Create();
-                        explosionSoundInstance.Apply3D(player.SoundMatrix, Vector3.Zero, enemies[i].SoundMatrix, Vector3.Zero);                      
-                        explosionSoundInstance.Play();                        
+                        explosionSoundInstance.Apply3D(player.SoundMatrix, Vector3.Zero, enemies[i].SoundMatrix, Vector3.Zero);
+                        explosionSoundInstance.Play();
                         enemies.RemoveAt(i);
                         score += 10;
                         i--;
@@ -228,14 +259,46 @@ namespace Project2
                     }
                 }
 
+                //Check item collision with player in the game
+                for (int i = 0; i < items.Count; i++)
+                {
+                    if (items[i].isCollidedWith(player))
+                    {
+                        // Pick-Up-Item Sound
+                        SoundEffectInstance pickUpItemSoundInstance = pickUpItemSound.Create();
+                        pickUpItemSoundInstance.Apply3D(player.SoundMatrix, Vector3.Zero, enemies[i].SoundMatrix, Vector3.Zero);
+                        pickUpItemSoundInstance.Play();
+                        for (int j = 0; j < player.inventory.Count; j++)
+                        {
+                            if (player.inventory[j] == null)
+                            {
+                                player.inventory.RemoveAt(j);
+                                player.inventory.Insert(j, items[i]);
+                                break;
+                            }
+                        }
+                        items.RemoveAt(i);
+                        i--;
+                    }
+                    else if (items[i].timeRemained <= 0)
+                    {
+                        items.RemoveAt(i);
+                        i--;
+                    }
+                    else
+                    {
+                        items[i].Update(gameTime);
+                    }
+                }
+
+                //Update character inventory
+                Page.UpdateInventory();
+
                 //Update radar, dependent on enemies on field
                 Page.UpdateRadar();
 
                 //update score
                 Page.UpdateScore(score);
-
-                //update the level of the current game
-                Page.UpdateLevel();
 
                 //update player health
                 Page.UpdatePlayerHealth(player.health);
@@ -262,12 +325,12 @@ namespace Project2
                     // Explosion Sound
                     SoundEffectInstance explosionSoundInstance = explosionSound.Create();
                     explosionSoundInstance.Apply3D(player.SoundMatrix, Vector3.Zero, player.SoundMatrix, Vector3.Zero);
-                    explosionSoundInstance.Play();             
+                    explosionSoundInstance.Play();
 
                     SoundEffectInstance defeatSoundInstance = defeatSound.Create();
                     defeatSoundInstance.Play();
                     Page.Defeat();
-                    
+
                 }
                 if (player.health > 0 && enemies.Count <= 0)
                 {
@@ -300,8 +363,14 @@ namespace Project2
                     enemy.Draw(gameTime);
                 foreach (Shell shell in shells)
                     shell.Draw(gameTime);
+                foreach (Item item in items)
+                    item.Draw(gameTime);
                 particleSystem.Draw(gameTime);
-            }            
+            }
+            else
+            {
+                GraphicsDevice.Clear(SharpDX.Color.Black);
+            }
             // Handle base.Draw
             base.Draw(gameTime);
         }
@@ -309,14 +378,18 @@ namespace Project2
         //Reset function resets the models and object of the game
         public void Reset()
         {
+            this.ResetElapsedTime();
+
             //Reset things back to initial state by instancing them again
-            HeightMap = new HeightMap(513, 1.0f, 50.0f);
+            HeightMap = new HeightMap(513, 1.0f, 60.0f);
             Random r = new Random();
             Camera = new Camera(this);
             landscape = new Landscape(this);
             player = new Player(this);
             shells = new List<Shell>();
             enemies = new List<Enemy>();
+            items = new List<Item>();
+            Page.ResetInventory();
             score = 0;
             for (int i = 0; i < MAX_ENEMIES; i++)
             {
@@ -329,6 +402,8 @@ namespace Project2
             }
             particleSystem = new ParticleSystem(this);
 
+            //difficulty level
+            Page.DisplayLevelBoard();
         }
     }
 }
