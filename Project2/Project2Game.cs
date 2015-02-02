@@ -270,10 +270,13 @@ namespace Project2
                         pickUpItemSoundInstance.Play();
                         for (int j = 0; j < player.inventory.Count; j++)
                         {
-                            if (player.inventory[j] == null)
+                            if (player.inventory[j] is EmptyItem)
                             {
-                                player.inventory.RemoveAt(j);
-                                player.inventory.Insert(j, items[i]);
+                                player.inventory[j] = items[i];
+                                //player.inventory.RemoveAt(j);
+                                //player.inventory.Insert(j, items[i]);
+                                //Update character inventory
+                                Page.UpdateInventory(j, true);
                                 break;
                             }
                         }
@@ -290,9 +293,6 @@ namespace Project2
                         items[i].Update(gameTime);
                     }
                 }
-
-                //Update character inventory
-                Page.UpdateInventory();
 
                 //Update radar, dependent on enemies on field
                 Page.UpdateRadar();

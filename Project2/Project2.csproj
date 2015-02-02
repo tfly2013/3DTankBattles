@@ -112,6 +112,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Camera.cs" />
+    <Compile Include="Objects\EmptyItem.cs" />
     <Compile Include="Objects\Enemy.cs" />
     <Compile Include="Objects\Firstaid.cs" />
     <Compile Include="Objects\Item.cs" />
@@ -174,6 +175,7 @@
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\UI\EmptySlot.png" />
     <Content Include="Assets\UI\firstaid.png" />
     <Content Include="Assets\UI\instructionBackground.png" />
     <Content Include="Assets\UI\mainMenuBackground.png" />

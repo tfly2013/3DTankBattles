@@ -59,9 +59,6 @@ namespace Project2
             this.Children.Add(mainMenu);
             HideGameUI();
             HideScoreboard();
-            //inventoryList = new Dictionary<int, Image>();
-            //for (int i = 0; i < 6; i++)
-            //    inventoryList.Add(i, null);
         }
 
         public void UpdateLevel()
@@ -86,24 +83,28 @@ namespace Project2
             lifeBar.Value = health;
         }
 
-        public void UpdateInventory()
-        {
-            ResetInventory();
-            int num = 0;
-            foreach (Item item in game.player.inventory)
-            {
-                Tuple<double, double>pos = InventoryCat(num);
-                double left = pos.Item1;
-                double top = pos.Item2;
-                if (item is Firstaid || item is Shield)
-                    DrawInventory(left, top, item);
-                num++;
-            }
-        }
-
         public void ResetInventory()
         {
             inventory.Children.Clear();
+        }
+
+        public void UpdateInventory(int num, bool add)
+        {
+            Tuple<double, double>pos = InventoryCat(num);
+            double left = pos.Item1;
+            double top = pos.Item2;
+            if (add)
+                DrawInventory(left, top, game.player.inventory[num]);
+            else 
+            {
+                for (int i = 0; i < game.player.inventory.Count; i++)
+                {
+                    Tuple<double, double> pos1 = InventoryCat(i);
+                    double left1 = pos.Item1;
+                    double top1 = pos.Item2;
+                    DrawInventory(left1, top1, game.player.inventory[i]);
+                }
+            }
         }
 
         private Tuple<double, double> InventoryCat(int key)
@@ -129,11 +130,12 @@ namespace Project2
                 img.Source = new BitmapImage(new Uri("ms-appx:///Assets/UI/firstaid.png", UriKind.Absolute));
             else if (item is Shield)
                 img.Source = new BitmapImage(new Uri("ms-appx:///Assets/UI/shield.png", UriKind.Absolute));
-
+            else if (item is EmptyItem)
+                img.Source = new BitmapImage(new Uri("ms-appx:///Assets/UI/EmptySlot.png", UriKind.Absolute));
+            
             Canvas.SetLeft(img, left);
             Canvas.SetTop(img, top);
             inventory.Children.Add(img);
-            //inventoryList[key] = img;
         }
 
         public void UpdateRadar()
@@ -481,5 +483,14 @@ namespace Project2
         }
         #endregion
 
+        public void Debug(string bug)
+        {
+            debug.Text += bug;
+        }
+
+        public void ClearDebug()
+        {
+            debug.Text = "";
+        }
     }
 }

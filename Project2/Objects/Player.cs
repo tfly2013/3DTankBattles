@@ -45,6 +45,8 @@ namespace Project2
             //Handles player input
             float move = 0;
             float rotate = 0;
+            bool inventoryOperated = false;
+            int inventoryOperationNum = -1;
 
             //Input from screen touch
             if (Settings.onScreenControl)
@@ -87,34 +89,62 @@ namespace Project2
 
             if (game.keyboardState.IsKeyDown(Keys.U))
             {
-                if (this.inventory[0] != null)
+                if (!(this.inventory[0] is EmptyItem))
+                {
                     InventoryOperate(inventory[0], 0);
+                    inventoryOperated = true;
+                    inventoryOperationNum = 0;
+                }
             }
             else if (game.keyboardState.IsKeyDown(Keys.I))
             {
-                if (this.inventory[1] != null)
+                if (!(this.inventory[1] is EmptyItem))
+                {
                     InventoryOperate(inventory[1], 1);
+                    inventoryOperated = true;
+                    inventoryOperationNum = 1;
+                }
             }
             else if (game.keyboardState.IsKeyDown(Keys.O))
             {
-                if (this.inventory[2] != null)
+                if (!(this.inventory[2] is EmptyItem))
+                {
                     InventoryOperate(inventory[2], 2);
+                    inventoryOperated = true;
+                    inventoryOperationNum = 2;
+                }
             }
             else if (game.keyboardState.IsKeyDown(Keys.J))
             {
-                if (this.inventory[3] != null)
+                if (!(this.inventory[3] is EmptyItem))
+                {
                     InventoryOperate(inventory[3], 3);
+                    inventoryOperated = true;
+                    inventoryOperationNum = 3;
+                }
             }
             else if (game.keyboardState.IsKeyDown(Keys.K))
             {
-                if (this.inventory[4] != null)
+                if (!(this.inventory[4] is EmptyItem))
+                {
                     InventoryOperate(inventory[4], 4);
+                    inventoryOperated = true;
+                    inventoryOperationNum = 4;
+                }
             }
             else if (game.keyboardState.IsKeyDown(Keys.L))
             {
-                if (this.inventory[5] != null)
+                if (!(this.inventory[5] is EmptyItem))
+                {
                     InventoryOperate(inventory[5], 5);
+                    inventoryOperated = true;
+                    inventoryOperationNum = 5;
+                }
             }
+
+            if (inventoryOperated)
+                //Update character inventory
+                game.Page.UpdateInventory(inventoryOperationNum, false);
 
             if (shieldTime > 0)
                 shieldTime -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -188,7 +218,7 @@ namespace Project2
         public void ResetInventory()
         {
             for (int i = 0; i < 6; i++)
-                inventory.Add(null);
+                inventory.Add(new EmptyItem(game, 0, 0));
         }
 
         public void InventoryOperate(Item item, int key)
@@ -203,8 +233,7 @@ namespace Project2
             else if (item is Shield)
                 this.shieldTime = 10000;
 
-            inventory.RemoveAt(key);
-            inventory.Insert(key, null);
+            inventory[key] = new EmptyItem(game, 0, 0);
         }
     }
 }
