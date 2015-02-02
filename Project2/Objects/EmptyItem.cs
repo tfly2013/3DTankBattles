@@ -18,7 +18,6 @@ namespace Project2
         public EmptyItem(Project2Game game, float posX, float posZ)
             : base(game, posX, posZ)
         {
-            type = "empty";
         }
     }
 }
