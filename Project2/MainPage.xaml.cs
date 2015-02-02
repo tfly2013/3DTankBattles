@@ -61,6 +61,16 @@ namespace Project2
             HideScoreboard();
         }
 
+        public void StartGame()
+        {
+            this.Children.Remove(mainMenu);
+            if (game.paused) game.paused = false;
+            game.started = true;
+            ShowGameUI();
+            game.Reset();
+        }
+
+        #region GameInfoUpdate
         public void UpdateLevel()
         {
             int dif = game.difficulty + 1;
@@ -82,7 +92,9 @@ namespace Project2
         {
             lifeBar.Value = health;
         }
+        #endregion
 
+        #region Inventory
         public void ResetInventory()
         {
             inventory.Children.Clear();
@@ -137,7 +149,9 @@ namespace Project2
             Canvas.SetTop(img, top);
             inventory.Children.Add(img);
         }
+        #endregion
 
+        #region Radar
         public void UpdateRadar()
         {
             radar.Children.Clear();
@@ -174,14 +188,12 @@ namespace Project2
             enemyPoint.Fill = new SolidColorBrush(col);
             radar.Children.Add(enemyPoint);
         }
+        #endregion
 
-        public void StartGame()
+        #region InGameMenu
+        private void btnMenuClicked(object sender, RoutedEventArgs e)
         {
-            this.Children.Remove(mainMenu);
-            if (game.paused) game.paused = false;
-            game.started = true;
-            ShowGameUI();
-            game.Reset();
+            ShowMenu();
         }
 
         private void ResumeClicked(object sender, RoutedEventArgs e)
@@ -204,6 +216,18 @@ namespace Project2
             game.Reset();
         }
 
+        private void EndGameClicked(object sender, RoutedEventArgs e)
+        {
+            HideMenu();
+            HideGameUI();
+            HideScoreboard();
+            game.started = false;
+            mainMenu = new MainMenu(this);
+            this.Children.Add(mainMenu);
+        }
+        #endregion
+
+        #region ScoreBoard
         public void Victory()
         {
             HideMenu();
@@ -211,38 +235,9 @@ namespace Project2
             game.paused = true;
 
             v_health.Text = "Player Health:    " + game.player.health.ToString();
-            int enemiesCount = 0;
-            if (Settings.difficulty == 0)
-                enemiesCount += 4 - game.enemies.Count;
-            else if (Settings.difficulty == 1)
-                enemiesCount += 8 - game.enemies.Count;
-            else if (Settings.difficulty == 2)
-                enemiesCount += 12 - game.enemies.Count;
-            else if (Settings.difficulty == 3)
-                enemiesCount += 16 - game.enemies.Count;
-            else if (Settings.difficulty == 4)
-                enemiesCount += 20 - game.enemies.Count;
-            else if (Settings.difficulty == 5)
-                enemiesCount += 24 - game.enemies.Count;
-            else if (Settings.difficulty == 6)
-                enemiesCount += 28 - game.enemies.Count;
-            else if (Settings.difficulty == 7)
-                enemiesCount += 32 - game.enemies.Count;
-            else if (Settings.difficulty == 8)
-                enemiesCount += 36 - game.enemies.Count;
-            else
-                enemiesCount += 40 - game.enemies.Count;
-            v_kills.Text = "Enemies Killed:  " + enemiesCount.ToString();
-
-            v_time.Text = "Game Time:       " +
-                Math.Round((float)game.gameTime.ElapsedGameTime.TotalMilliseconds, 1,
-                MidpointRounding.AwayFromZero) + "s";
-
-            int score = game.score + game.player.health -
-                    (int)game.gameTime.ElapsedGameTime.TotalMilliseconds / 5;
-            if (score < 0)
-                score = 0;
-            v_gamescore.Text = "Game Score:      " + score;
+            v_kills.Text = "Enemies Killed:  " + GetEnemiesKilled().ToString();
+            v_time.Text = "Game Time:       " + GetGameTime() + "s";
+            v_gamescore.Text = "Game Score:      " + CalculateScore();
 
             v_scoreboard.Visibility = Visibility.Visible;
             d_scoreboard.Visibility = Visibility.Collapsed;
@@ -276,6 +271,26 @@ namespace Project2
             if (game.player.health <= 0)
                 game.player.health = 0;
             d_health.Text = "Player Health:    " + game.player.health.ToString();
+            d_kills.Text = "Enemies Killed:  " + GetEnemiesKilled().ToString();
+            d_time.Text = "Game Time:       " + GetGameTime() + "s";
+            d_gamescore.Text = "Game Score:      " + CalculateScore();
+
+            d_scoreboard.Visibility = Visibility.Visible;
+            v_scoreboard.Visibility = Visibility.Collapsed;
+        }
+
+        private void DContinueClicked(object sender, RoutedEventArgs e)
+        {
+            HideScoreboard();
+            Settings.difficulty = 0;
+            game.started = false;
+
+            mainMenu = new MainMenu(this);
+            this.Children.Add(mainMenu);
+        }
+
+        private int GetEnemiesKilled()
+        {
             int enemiesCount = 0;
             if (Settings.difficulty == 0)
                 enemiesCount += 4 - game.enemies.Count;
@@ -297,96 +312,31 @@ namespace Project2
                 enemiesCount += 36 - game.enemies.Count;
             else
                 enemiesCount += 40 - game.enemies.Count;
-            d_kills.Text = "Enemies Killed:  " + enemiesCount.ToString();
-            d_time.Text = "Game Time:       " +
-                Math.Round((float)game.gameTime.ElapsedGameTime.TotalMilliseconds, 1,
-                MidpointRounding.AwayFromZero) + "s";
 
+            return enemiesCount;
+        }
+
+        private int CalculateScore()
+        {
             int score = game.score + game.player.health -
-                    (int)game.gameTime.ElapsedGameTime.TotalMilliseconds / 5;
+                    (int)game.gameTime.ElapsedGameTime.TotalMilliseconds;
+            foreach (Item item in game.player.inventory)
+            {
+                if (!(item is EmptyItem))
+                    score += 5;
+            }
             if (score < 0)
                 score = 0;
-            d_gamescore.Text = "Game Score:      " + score;
 
-            d_scoreboard.Visibility = Visibility.Visible;
-            v_scoreboard.Visibility = Visibility.Collapsed;
+            return score;
         }
 
-        private void DContinueClicked(object sender, RoutedEventArgs e)
+        private double GetGameTime()
         {
-            HideScoreboard();
-            Settings.difficulty = 0;
-            game.started = false;
-
-            mainMenu = new MainMenu(this);
-            this.Children.Add(mainMenu);
+            return Math.Round((float)game.gameTime.ElapsedGameTime.TotalMilliseconds, 1,
+                MidpointRounding.AwayFromZero);
         }
-
-        private void EndGameClicked(object sender, RoutedEventArgs e)
-        {
-            HideMenu();
-            HideGameUI();
-            HideScoreboard();
-            game.started = false;
-            mainMenu = new MainMenu(this);
-            this.Children.Add(mainMenu);
-        }
-
-        public void HideScoreboard()
-        {
-            d_scoreboard.Visibility = Visibility.Collapsed;
-            v_scoreboard.Visibility = Visibility.Collapsed;
-        }
-
-        public void ShowGameUI()
-        {
-            txtScore.Visibility = Visibility.Visible;
-            btnMenu.Visibility = Visibility.Visible;
-            lifeBar.Visibility = Visibility.Visible;
-            if (Settings.onScreenControl && HasTouch())
-                control.Visibility = Visibility.Visible;
-            else
-                control.Visibility = Visibility.Collapsed;
-            radar.Visibility = Visibility.Visible;
-            character.Visibility = Visibility.Visible;
-        }
-
-        public void HideGameUI()
-        {
-            txtScore.Visibility = Visibility.Collapsed;
-            btnMenu.Visibility = Visibility.Collapsed;
-            lifeBar.Visibility = Visibility.Collapsed;
-            control.Visibility = Visibility.Collapsed;
-            radar.Visibility = Visibility.Collapsed;
-            character.Visibility = Visibility.Collapsed;
-        }
-
-        private void btnMenuClicked(object sender, RoutedEventArgs e)
-        {
-            ShowMenu();
-        }
-
-        public void ShowMenu()
-        {
-            if (game.started)
-                game.paused = true;
-            menu.Visibility = Visibility.Visible;
-            btnMenu.IsEnabled = false;
-        }
-
-        public void HideMenu()
-        {
-            menu.Visibility = Visibility.Collapsed;
-            btnMenu.IsEnabled = true;
-        }
-
-        public bool HasTouch()
-        {
-            return Windows.Devices.Input
-                      .PointerDevice.GetPointerDevices()
-                      .Any(p => p.PointerDeviceType ==
-                          Windows.Devices.Input.PointerDeviceType.Touch);
-        }
+        #endregion
 
         #region Control
         private void MoveDragger(PointerPoint point)
@@ -448,6 +398,32 @@ namespace Project2
             {
                 game.player.Firing = true;
                 firePointerId = e.Pointer.PointerId;
+
+                //get touch input to operate inventory
+                int num = -1;
+                if (Y > -554 && Y < -507)
+                {
+                    if (X > 121 && X < 161)
+                        num = 0;
+                    else if (X > 186 && X < 225)
+                        num = 1;
+                    else if (X > 247 && X < 286)
+                        num = 2;
+                }
+                else if (Y > -492 && Y < -445)
+                {
+                    if (X > 121 && X < 161)
+                        num = 3;
+                    else if (X > 186 && X < 225)
+                        num = 4;
+                    else if (X > 247 && X < 286)
+                        num = 5;
+                }
+                if(num != -1)
+                {
+                    game.player.InventoryOperate(game.player.inventory[num], num);
+                    UpdateInventory(num, false);
+                }
             }
         }
 
@@ -470,8 +446,8 @@ namespace Project2
         {
             if (e.Pointer.PointerId == draggerPointerId)
             {
-                Canvas.SetLeft(dragger, 100);
-                Canvas.SetTop(dragger, 100);
+                Canvas.SetLeft(dragger, 60);
+                Canvas.SetTop(dragger, 60);
                 draggerPointerId = 0;
                 game.Page.ControlX = game.Page.ControlY = 0;
             }
@@ -483,6 +459,60 @@ namespace Project2
         }
         #endregion
 
+        #region UI-Functions
+        public void HideScoreboard()
+        {
+            d_scoreboard.Visibility = Visibility.Collapsed;
+            v_scoreboard.Visibility = Visibility.Collapsed;
+        }
+
+        public void ShowGameUI()
+        {
+            txtScore.Visibility = Visibility.Visible;
+            btnMenu.Visibility = Visibility.Visible;
+            lifeBar.Visibility = Visibility.Visible;
+            if (Settings.onScreenControl && HasTouch())
+                control.Visibility = Visibility.Visible;
+            else
+                control.Visibility = Visibility.Collapsed;
+            radar.Visibility = Visibility.Visible;
+            character.Visibility = Visibility.Visible;
+        }
+
+        public void HideGameUI()
+        {
+            txtScore.Visibility = Visibility.Collapsed;
+            btnMenu.Visibility = Visibility.Collapsed;
+            lifeBar.Visibility = Visibility.Collapsed;
+            control.Visibility = Visibility.Collapsed;
+            radar.Visibility = Visibility.Collapsed;
+            character.Visibility = Visibility.Collapsed;
+        }
+
+        public void ShowMenu()
+        {
+            if (game.started)
+                game.paused = true;
+            menu.Visibility = Visibility.Visible;
+            btnMenu.IsEnabled = false;
+        }
+
+        public void HideMenu()
+        {
+            menu.Visibility = Visibility.Collapsed;
+            btnMenu.IsEnabled = true;
+        }
+
+        public bool HasTouch()
+        {
+            return Windows.Devices.Input
+                      .PointerDevice.GetPointerDevices()
+                      .Any(p => p.PointerDeviceType ==
+                          Windows.Devices.Input.PointerDeviceType.Touch);
+        }
+        #endregion
+
+        #region debug
         public void Debug(string bug)
         {
             debug.Text += bug;
@@ -492,5 +522,6 @@ namespace Project2
         {
             debug.Text = "";
         }
+        #endregion
     }
 }

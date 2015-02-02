@@ -101,7 +101,7 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
-    
+
     <TextBlock Name="debug" Height="200" Width="500" Margin="20, 100, 0, 0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 </SwapChainBackgroundPanel>
 
