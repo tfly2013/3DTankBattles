@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="42716KimpleKe.3DTankBattles" Publisher="CN=9539C867-DC78-4144-8FDA-91D9C9DBC41E" Version="1.1.0.9" />
+  <Identity Name="42716KimpleKe.3DTankBattles" Publisher="CN=9539C867-DC78-4144-8FDA-91D9C9DBC41E" Version="1.1.0.10" />
   <Properties>
     <DisplayName>3D Tank Battles</DisplayName>
     <PublisherDisplayName>Kimple Ke</PublisherDisplayName>
