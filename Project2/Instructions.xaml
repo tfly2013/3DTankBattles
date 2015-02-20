@@ -13,6 +13,6 @@
             <ImageBrush ImageSource="Assets/UI/instructionBackground.png" Stretch="Uniform"/>
         </Grid.Background>
         <Button x:Name="cmdBack" Content="Back" HorizontalAlignment="Right" Height="70" Margin="909,0,121,58" VerticalAlignment="Bottom" Width="250" Click="GoBack" Style="{StaticResource MenuButtonStyle}"/>
-        <TextBlock x:Name="txtInstructions" Foreground="Black" FontSize="20"  HorizontalAlignment="Left" Height="519" Margin="80,73,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="803"/>
+        <TextBlock x:Name="txtInstructions" Foreground="Black" FontSize="20"  HorizontalAlignment="Left" Height="519" Margin="80,65,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="803"/>
     </Grid>
 </Page>

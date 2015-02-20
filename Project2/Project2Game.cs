@@ -62,8 +62,9 @@ namespace Project2
         //Number of enemys per game
         public int MAX_ENEMIES = 4;
         //index for chance to get shield and first-aid
-        public int shield_index = 4;
+        public int shield_index = 3;
         public int firstaid_index = 2;
+        public int barrel_index = 4;
         //difficulty level for the game
         public int difficulty;
         //Random used to randomly place enemies on the plane
@@ -231,6 +232,9 @@ namespace Project2
                         else if (ran <= shield_index && ran > firstaid_index)
                             items.Add(new Shield(this, enemies[i].position.X,
                                 enemies[i].position.Z, enemies[i].yaw));
+                        else if (ran <= barrel_index && ran > shield_index)
+                            items.Add(new OilBarrel(this, enemies[i].position.X,
+                                enemies[i].position.Z, enemies[i].yaw));
 
                         // Explosion particle
                         for (int j = 0; j < 200; j++)
@@ -273,9 +277,6 @@ namespace Project2
                             if (player.inventory[j] is EmptyItem)
                             {
                                 player.inventory[j] = items[i];
-                                //player.inventory.RemoveAt(j);
-                                //player.inventory.Insert(j, items[i]);
-                                //Update character inventory
                                 Page.UpdateInventory(j, true);
                                 break;
                             }

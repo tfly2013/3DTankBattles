@@ -19,7 +19,7 @@
     <AppxBundle>Never</AppxBundle>
     <PackageCertificateThumbprint>87DC4106030F3C7C0B20D5C8B306E226C17789FF</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <AppxPackageDir>C:\Users\Kimple\Desktop\Tank Battles\app packages\</AppxPackageDir>
+    <AppxPackageDir>C:\Users\Kimple\Desktop\NewTankBattles\app packages\</AppxPackageDir>
     <AppxBundlePlatforms>neutral</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -129,6 +129,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Objects\OilBarrel.cs" />
     <Compile Include="Objects\Shield.cs" />
     <Compile Include="Particle\ParticleSystem.cs" />
     <Compile Include="Particle\ParticleVertex.cs" />
@@ -151,6 +152,7 @@
     </AppxManifest>
     <ToolkitModel Include="Content\items\first-aid\first_aid_kit.FBX" />
     <ToolkitModel Include="Content\items\shield\shield.fbx" />
+    <ToolkitModel Include="Content\items\oil-barrel\barrel.FBX" />
     <None Include="Project2_StoreKey.pfx" />
     <None Include="Project2_TemporaryKey.pfx" />
     <ToolkitModel Include="Content\tank\tiger\tiger.fbx">
@@ -182,6 +184,7 @@
     <Content Include="Assets\UI\menuBackground.jpg" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
     <Content Include="Assets\UI\crosshair.png" />
+    <Content Include="Assets\UI\oil_barrel.png" />
     <Content Include="Assets\UI\radar.png" />
     <ToolkitAudio Include="Content\sound\background_music.wav" />
     <Content Include="Assets\UI\scoreboard_background_d.png" />
@@ -194,6 +197,7 @@
     <ToolkitTexture Include="Content\items\first-aid\firstaid_color.png" />
     <ToolkitTexture Include="Content\items\shield\Map.jpg" />
     <ToolkitAudio Include="Content\sound\pickUpItem.wav" />
+    <ToolkitTexture Include="Content\items\oil-barrel\barrel_diffuse.png" />
     <Content Include="readMe.txt" />
     <ToolkitAudio Include="Content\sound\explosion.wav" />
     <ToolkitAudio Include="Content\sound\fire.wav" />

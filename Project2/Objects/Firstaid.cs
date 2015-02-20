@@ -1,6 +1,6 @@
 ﻿// Authors: Fei Tang, Kimple Ke, Ha Jin Song
 // Last Modified: 28/12/2014
-// Item might drop when an enemy dies, item include first-aid, shield
+// Item might drop when an enemy dies, item include first-aid, shield, oil barrel
 //Use SharpDX
 using System;
 using System.Collections.Generic;

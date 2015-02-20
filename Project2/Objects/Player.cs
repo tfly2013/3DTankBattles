@@ -17,6 +17,7 @@ namespace Project2
     public class Player : Tank
     {
         public float shieldTime;
+        public float extra_speed;
 
         public List<Item> inventory;
 
@@ -36,6 +37,7 @@ namespace Project2
             CalculateSurroundings();
             camera.Update(position, yaw);
             shieldTime = 0;
+            extra_speed = 0;
             inventory = new List<Item>();
             ResetInventory();
         }
@@ -63,7 +65,7 @@ namespace Project2
                 rotate = -(float)game.accel_val.AccelerationX/50;
             }
 
-            float moveSpeed = 0.02f;
+            float moveSpeed = 0.02f + extra_speed;
             if (game.keyboardState.IsKeyDown(Keys.W))
                 move += moveSpeed;
             if (game.keyboardState.IsKeyDown(Keys.S))
@@ -232,6 +234,8 @@ namespace Project2
             }
             else if (item is Shield)
                 this.shieldTime = 10000;
+            else if (item is OilBarrel)
+                this.extra_speed += 0.001f;
 
             inventory[key] = new EmptyItem(game, 0, 0);
         }

@@ -40,6 +40,12 @@ namespace Project2
             //Set instruction text
             txtInstructions.Text += "You are surrounded by enemy tank units.\r\n";
             txtInstructions.Text += "There is no way out, you must fight on...\r\n";
+            txtInstructions.Text += "Remember you will have helpful items (shield, first-aid, oil barrel).\r\n";
+            txtInstructions.Text += "Use radar to detect enemy movements:\r\n";
+            txtInstructions.Text += "\tRed - You are in enemies' range and are in danger.\r\n";
+            txtInstructions.Text += "\tBlue - You are detected, enemies will fire.\r\n";
+            txtInstructions.Text += "\tGreen - Not within enemies' range, you are safe.\r\n";
+
             txtInstructions.Text += "Tablet users: \r\n";
             txtInstructions.Text += "\tUse controller on screen or accelerometer to control tank.\r\n";
             txtInstructions.Text += "\tPress screen to shoot.\r\n";
@@ -48,10 +54,7 @@ namespace Project2
             txtInstructions.Text += "\ts - backward              d - turn right\r\n";
             txtInstructions.Text += "\tp/left click on mouse - fire (fire range apply)\r\n";
             txtInstructions.Text += "\tu,i,o,j,k,l buttons - apply effects of items in inventory\r\n";
-            txtInstructions.Text += "Use radar to detect enemy movements:\r\n";
-            txtInstructions.Text += "\tRed - You are in enemies' range and are in danger.\r\n";
-            txtInstructions.Text += "\tBlue - You are detected, enemies will fire.\r\n";
-            txtInstructions.Text += "\tGreen - Not within enemies' range, you are safe.\r\n";
+
             txtInstructions.Text += "Good luck!";
         }
 

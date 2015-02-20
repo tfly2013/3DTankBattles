@@ -112,8 +112,8 @@ namespace Project2
                 for (int i = 0; i < game.player.inventory.Count; i++)
                 {
                     Tuple<double, double> pos1 = InventoryCat(i);
-                    double left1 = pos.Item1;
-                    double top1 = pos.Item2;
+                    double left1 = pos1.Item1;
+                    double top1 = pos1.Item2;
                     DrawInventory(left1, top1, game.player.inventory[i]);
                 }
             }
@@ -142,6 +142,8 @@ namespace Project2
                 img.Source = new BitmapImage(new Uri("ms-appx:///Assets/UI/firstaid.png", UriKind.Absolute));
             else if (item is Shield)
                 img.Source = new BitmapImage(new Uri("ms-appx:///Assets/UI/shield.png", UriKind.Absolute));
+            else if (item is OilBarrel)
+                img.Source = new BitmapImage(new Uri("ms-appx:///Assets/UI/oil_barrel.png", UriKind.Absolute));
             else if (item is EmptyItem)
                 img.Source = new BitmapImage(new Uri("ms-appx:///Assets/UI/EmptySlot.png", UriKind.Absolute));
             
